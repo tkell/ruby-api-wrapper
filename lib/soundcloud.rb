@@ -4,7 +4,7 @@
 
 require 'rubygems'
 
-gem 'oauth', '0.3.4'
+gem 'pelle-oauth', '0.3.6'
 require 'oauth'
 
 gem 'jwagener-oauth-active-resource'
