@@ -25,11 +25,21 @@ describe "Soundcloud::Models::Track" do
 
   end
   
+  
   it "should be able to create a new track and default to sharing=private" do
     test_track_file = File.new( File.dirname(__FILE__) + '/fixtures/test_track.mp3')
     track = @sc.Track.create({:title => "test", :asset_data => test_track_file})  
     track.sharing.should == 'private'
     track.permalink.should_not == nil
+    track.destroy
+  end
+  
+  it "should be able to create a new track with artwork" do
+    test_track_file = File.new( File.dirname(__FILE__) + '/fixtures/test_track.mp3')
+    test_artwork_file = File.new( File.dirname(__FILE__) + '/fixtures/test_artwork.gif')
+    track = @sc.Track.create({:title => "test", :asset_data => test_track_file, :artwork_data => test_artwork_file})  
+    
+    track.artwork_url.should_not == nil
     track.destroy
   end
   
@@ -40,6 +50,17 @@ describe "Soundcloud::Models::Track" do
     track.permalink.should_not == nil
     track.destroy
   end
+  
+  it "should be able to update a track artwork" do
+    test_artwork_file = File.new( File.dirname(__FILE__) + '/fixtures/test_artwork.gif')
+    track = @sc.Track.find('static-test-track')   
+    old_artwork = track.artwork_url
+    track.artwork_data = test_artwork_file
+    
+    track.save
+    track.artwork_url.should_not == old_artwork
+  end
+  
   
   it 'should be able to create a new track and remove it' do
     test_track_file = File.new(File.dirname(__FILE__) + '/fixtures/test_track.mp3')
@@ -57,15 +78,60 @@ describe "Soundcloud::Models::Track" do
   
   it 'should be able to update an attribute' do
     track = @sc.Track.find('static-test-track')   
-    track.title = "T #{Time.now}"
+    time = Time.now
+    track.title = "T #{time}"
     track.save
     track.title = 'something else'
     
     track.reload
 
-    track.title.should == "T #{Time.now}"
-
+    track.title.should == "T #{time}"
   end
+  
+  it 'should be able to update tag_list directly' do
+    track = @sc.Track.find('static-test-track')
+    time = Time.now
+    track.tag_list = "T#{time} B#{time}"
+    track.save
+    track.tag_list = 'something else'
+
+    track.reload
+
+    track.tag_list.should == "T#{time} B#{time}" 
+  end
+  
+ # it 'should be able to read the tags array' do
+ #   track = @sc.Track.new
+ #   
+ #   track.tag_list = "bla blub"
+ #   
+ #   track.tags.include?('bla').should == true
+ #   track.tags.include?('blub').should == true
+ # end
+ # 
+ # 
+ # it 'should be able to write to the tags array' do
+ #   track = @sc.Track.new
+ #   
+ #   track.tags << 'bla'
+ #   track.tags << 'blub'
+ #   
+ #   track.tag_list.should == "bla blub"
+ # end
+  
+  #it 'should be able to update the tags array' do 
+  #  track = @sc.Track.find('static-test-track')
+  #  time = Time.now
+  #  track.tags << "'bl ub'"
+  #  track.save
+  #  track.tags.include?("'bl ub'").should == true
+  #  
+  #  track.tags.delete('')
+  #  
+  #  #reload
+  #  #tag_list.should_contain
+  #  #tags.include? 'bla
+  #end
   
   it 'should be able to add a user to permissions of a track and delete it again' do
     track = @sc.Track.find(:one, :from => '/users/api-test-1/tracks/static-test-track')   

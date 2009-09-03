@@ -4,6 +4,29 @@ module Soundcloud
       #      self.site = 'http://api.soundcloud.dev'
       
       
+      def send_files(method,path,resource)
+       params = ActiveSupport::OrderedHash.new
+       self.attributes.reject { |k,v| data_attributes.include?(k)}.each { |k,v| 
+           params["#{resource}[#{k}]".to_sym] = v 
+       }
+       
+       # ignore is added because the multipart gem is adding an extra new line 
+       # to the last parameter which will break parsing of track[sharing]
+       params[:ignore] = 'multipart bug'
+       
+       files = {}
+       data_attributes.each do |attr|
+         files["#{resource}[#{attr}]".to_sym] = self.attributes[attr] if self.attributes.has_key?(attr)
+         self.attributes[attr] = nil
+       end
+       
+       response = connection.handle_response(self.class.send_multipart_request(method,path,files,params))
+
+       self.id = id_from_response(response)
+       load_attributes_from_response(response)
+      
+      end
+      
       # has_many_single_changeable and can_be_a_single_changeable is mostly used in combination with has_many.
       #
       # can_be_a_single_changeable expects to have a resource /me which is the logged-in user
@@ -39,7 +62,7 @@ module Soundcloud
       #
       #   friend.has_friend?(stranger.id)
       #  => checks if stranger and friend are friend, returns true or false
-      
+
       def self.can_be_a_single_changeable(*args)
         args.each do |k| 
           singular = k.to_s

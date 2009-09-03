@@ -43,4 +43,23 @@ describe 'Soundcloud::Models::Playlist' do
     pl.user.online.should_not be nil
   end
   
+  
+  it "should be able to update a playlist artwork" do
+    test_artwork_file = File.new( File.dirname(__FILE__) + '/fixtures/test_artwork.gif')
+    playlist = @sc.Playlist.find('my-static-playlist')
+    old_artwork = playlist.artwork_url
+    playlist.artwork_data = test_artwork_file
+    
+    playlist.save
+    playlist.artwork_url.should_not == old_artwork
+  end
+  
+  it "should be able to create a new playlist with artwork" do
+    #track = @sc.Track.find('static-test-track')   
+    test_artwork_file = File.new( File.dirname(__FILE__) + '/fixtures/test_artwork.gif')
+        
+    playlist = @sc.Playlist.create({:title => 'test', :artwork_data => test_artwork_file})
+    playlist.artwork_url.should_not == nil
+    #playlist.destroy
+  end
 end

@@ -85,7 +85,9 @@ module Soundcloud
       belongs_to :user
       has_many :permissions, :comments
       can_be_a_single_changeable :favorite
-            
+      cattr_accessor :data_attributes
+      self.data_attributes = ['asset_data', 'artwork_data']      
+      
       cattr_accessor :element_name
       self.element_name = 'track'
      
@@ -111,38 +113,22 @@ module Soundcloud
       end
         
       def update
-        unless attributes[:asset_data].nil?
-          raise 'Multipart update is NotImplemented'
-          self.class.send_multipart_request(:put,'/tracks/#{self.id}','replacement[asset_data]',@asset_data)
+        if data_attributes.all? { |attr| self.attributes[attr].nil? }
+          super
+        else
+          send_files(:put,"/tracks/#{self.id}",'track')
         end
-        super
       end
                 
       def create
-        if self.asset_data.nil?
+        if data_attributes.all? { |attr| self.attributes[attr].nil? }
           super
         else
-         #post asset_data 
-         
          # default to private
          if self.sharing?.nil? 
            self.sharing = 'private'
          end
-         
-         params = ActiveSupport::OrderedHash.new
-         self.attributes.reject { |k,v| k.to_s == 'asset_data'}.each { |k,v| 
-             params["track[#{k}]".to_sym] = v 
-         }
-         
-         # ignore is added because the multipart gem is adding an extra new line 
-         # to the last parameter which will break parsing of track[sharing]
-         params[:ignore] = 'multipart bug'
-         
-         response = connection.handle_response(self.class.send_multipart_request(:post,'/tracks','track[asset_data]',self.asset_data,params))
-
-         self.id = id_from_response(response)
-         load_attributes_from_response(response)
-         self.asset_data = nil
+         send_files(:post,'/tracks','track')
       end
     end      
   end    

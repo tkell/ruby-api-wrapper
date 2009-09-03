@@ -41,12 +41,34 @@ module Soundcloud
     class Playlist < Base
       belongs_to :user
       #      has_many :permissions
+      cattr_accessor :data_attributes
+      self.data_attributes = ['artwork_data']
       cattr_accessor :element_name    
       self.element_name = 'playlist'    
       def initialize(*args)
         super(*args)
         #create empty tracks array if not existing
         attributes['tracks'] = Array.new if not self.tracks?
+      end
+      
+      def update
+        if data_attributes.all? { |attr| self.attributes[attr].nil? }
+          super
+        else
+          send_files(:put,"/playlists/#{self.id}",'playlist')
+        end
+      end
+                
+      def create
+        if data_attributes.all? { |attr| self.attributes[attr].nil? }
+          super
+        else
+         # default to private
+         if self.sharing?.nil? 
+           self.sharing = 'private'
+         end
+         send_files(:post,'/playlists', 'playlist')
+        end
       end
     end        
   end
