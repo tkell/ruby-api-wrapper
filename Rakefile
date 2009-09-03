@@ -12,7 +12,7 @@ begin
     gem.homepage = "http://github.com/soundcloud/ruby-api-wrapper"
     gem.authors = ["Johannes Wagener"]
     gem.add_dependency "jwagener-oauth-active-resource"    
-    gem.add_dependency "oauth"        
+    gem.add_dependency "pelle-oauth"        
   end  
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"  
