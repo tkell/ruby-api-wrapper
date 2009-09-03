@@ -57,13 +57,14 @@ describe "Soundcloud::Models::Track" do
   
   it 'should be able to update an attribute' do
     track = @sc.Track.find('static-test-track')   
-
-    track.title = 'This is updated'
+    track.title = "T #{Time.now}"
     track.save
-
+    track.title = 'something else'
+    
     track.reload
 
-    track.title.should == 'This is updated'
+    track.title.should == "T #{Time.now}"
+
   end
   
   it 'should be able to add a user to permissions of a track and delete it again' do
