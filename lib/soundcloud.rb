@@ -4,10 +4,10 @@
 
 require 'rubygems'
 
-gem 'pelle-oauth', '0.3.6'
+gem 'oauth', '>= 0.3.6'
 require 'oauth'
 
-gem 'jwagener-oauth-active-resource'
+gem 'oauth-active-resource'
 require 'oauth_active_resource'
 
 module Soundcloud  

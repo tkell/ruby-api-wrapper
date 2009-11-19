@@ -3,16 +3,14 @@ require 'rake'
 
 begin  
   require 'jeweler'
-
-
   Jeweler::Tasks.new do |gem|
-    gem.name = "ruby-api-wrapper"
-    gem.summary = %Q{TODO}
+    gem.name = "soundcloud-ruby-api-wrapper"
+    gem.summary = %Q{A ruby wrapper for the SoundCloud API}
     gem.email = "johannes@wagener.cc"
     gem.homepage = "http://github.com/soundcloud/ruby-api-wrapper"
     gem.authors = ["Johannes Wagener"]
-    gem.add_dependency "jwagener-oauth-active-resource"    
-    gem.add_dependency "pelle-oauth"        
+    gem.add_dependency "oauth-active-resource", ">= 0.4.4"   
+    gem.add_dependency "oauth", ">= 0.3.6"        
   end  
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"  

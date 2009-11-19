@@ -1,29 +1,22 @@
 module Soundcloud
   module Models
     class Base < OAuthActiveResource::Resource #:nodoc:
-      #      self.site = 'http://api.soundcloud.dev'
-      
-      
-      def send_files(method,path,resource)
-       params = ActiveSupport::OrderedHash.new
-       self.attributes.reject { |k,v| data_attributes.include?(k)}.each { |k,v| 
-           params["#{resource}[#{k}]".to_sym] = v 
-       }
+      def send_files(method, path, resource)
+        params = {}
+        self.attributes.reject { |k,v| data_attributes.include?(k)}.each { |k,v| 
+          params["#{resource}[#{k}]"] = v
+        }
+        
+        files = {}
+        data_attributes.each do |attr|
+          files["#{resource}[#{attr}]".to_sym] = self.attributes[attr] if self.attributes.has_key?(attr)
+          self.attributes[attr] = nil
+        end
+        
+        response = connection.handle_response(self.class.send_multipart_request(method,path,files,params))
        
-       # ignore is added because the multipart gem is adding an extra new line 
-       # to the last parameter which will break parsing of track[sharing]
-       params[:ignore] = 'multipart bug'
-       
-       files = {}
-       data_attributes.each do |attr|
-         files["#{resource}[#{attr}]".to_sym] = self.attributes[attr] if self.attributes.has_key?(attr)
-         self.attributes[attr] = nil
-       end
-       
-       response = connection.handle_response(self.class.send_multipart_request(method,path,files,params))
-
-       self.id = id_from_response(response)
-       load_attributes_from_response(response)
+        self.id = id_from_response(response)
+        load_attributes_from_response(response)
       
       end
       

@@ -3,25 +3,33 @@
 <div id="description" style="width: 600px">
 
 <h2>Getting started</h2>
+
+<h3>News</h3>
+
+19. November 2009
+<p>With version 0.4.2 we switched back to the mojodna oauth gem, since the bug was finally fixed. We also had to switch to gemcutter.org to host our gems, since github doesn't support gem building and hosting anymore. By doing that we renamed jwagener-oauth-active-resource to oauth-active-resource.</p>
+
+September 2009
+<p>With the soundcloud-ruby-api-wrapper version 0.4.1 we switched from the <a href="http://github.com/mojodna/oauth/tree/master">official (mojodna) oauth gem</a> to <a href="http://github.com/pelle/oauth/tree/master">pelle oauth gem</a> (0.3.6) because of an <a href="http://groups.google.com/group/oauth-ruby/browse_thread/thread/a7f8cb6b5eae2023">everlasting,unfixed bug</a> in the official gem.</p>
+
 <h3>Required Gems</h3>
 
 <ul>
 <li>activeresource gem</li>
 <li>activesupport gem</li>
 <li>multipart gem</li>
-<li>oauth gem</li>
-<li><a href="http://github.com/jwagener/oauth-active-resource">jwagener-oauth-active-resource</a> gem</li>
+<li>oauth gem (&gt;= 0.3.6)</li>
+<li><a href="http://github.com/jwagener/oauth-active-resource">oauth-active-resource</a> gem</li>
 </ul>
 
 <h3>Installation</h3>
+First install all the missing required gems. To install the oauth-active-resource gem you can use:
 
-First install all the missing required gems. To install the jwagener-oauth-active-resource gem you can use:
-
-<pre>$ sudo gem install jwagener-oauth-active-resource -s http://gems.github.com</pre>
+<pre>$ sudo gem install oauth-active-resource -s http://gemcutter.org</pre>
 
 Then install the soundcloud api wrapper gem:
 
-<pre>$ sudo gem install soundcloud-ruby-api-wrapper -s http://gems.github.com</pre>
+<pre>$ sudo gem install soundcloud-ruby-api-wrapper -s http://gemcutter.org</pre>
 
 <h3>Setup OAuth things</h3>
 

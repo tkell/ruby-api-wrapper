@@ -15,10 +15,10 @@ def soundcloud_site
 end
 
 def valid_oauth_access_token
-  access_token = '2OrtU756yB87XrV09LQK5g'
-  access_secret = 'Y0mcUHPlkKmSgVGSdFAqiqnx6noGtgQv5rHYgq6jVk'
-  consumer_token = 'z8DueHG2qA6wrccaei9Lw'
-  consumer_secret = '3AmT3KFGGa17LRCV65HQZ9F1qFEQ8dIGr4DuuK0aY'
+  access_token = '2EXCRQykOLw7MPhzbndyg'
+  access_secret = 'rCAlWbPfjG7rFOIE7LwbQ1OVfhNmHTTbNrK9zjTY'
+  consumer_token = 'z9orRCWjmdrqWJZ0ly6lg'
+  consumer_secret = 'PjL4H3bnNiLtmXQaaAIRaJxI6OWE2Sr5xB8ANRbhfMk'
 
   sc_consumer = Soundcloud.consumer(consumer_token,consumer_secret,soundcloud_site)
   return OAuth::AccessToken.new(sc_consumer, access_token, access_secret)

@@ -42,8 +42,8 @@ describe "Soundcloud::Models::User" do
   end
 
   it 'should check if a user has a favorite' do
-    track1 = @sc.Track.find('track1-2')
-    track2 = @sc.Track.find('track2-2')
+    track1 = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/track3-1')
+    track2 = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/track1-2')
     @api_test_2.has_favorite?(track1).should be true
     @api_test_2.has_favorite?(track1.id).should be true    
     @api_test_2.has_favorite?(track2).should be false
