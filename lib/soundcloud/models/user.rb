@@ -97,7 +97,10 @@ module Soundcloud
     end
     
     class Fan < User #:nodoc:
-    end    
+    end
+        
+    class Creator < User #:nodoc:
+    end
   end
 end
 

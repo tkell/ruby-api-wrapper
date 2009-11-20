@@ -44,7 +44,27 @@ module Soundcloud
   #
   def self.register(options = {})
     options[:site] = options[:site] || 'http://api.soundcloud.com'
-    OAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'), options)
+    mod = OAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'), options)
+    add_resolver_to_mod(mod)
+  end
+  
+  
+  # Quick hack to add support api.soundcloud.com/resolve . TODO jw cleanup :) 
+  def self.add_resolver_to_mod(mod)
+    mod.module_eval do 
+      def self.resolve(url)
+        base = self.const_get('Base')
+        response = base.oauth_connection.get("/resolve?url=#{url}")
+        if response.code == "302"
+          path = URI.parse(response.header['Location']).path
+          resource_class = base.new.send(:find_or_create_resource_for_collection, path.split('/')[-2])
+          resource_class.find(:one, :from => path)
+        else
+          raise ActiveResource::ResourceNotFound.new(response)
+        end
+      end
+    end
+    mod
   end
 end
 
@@ -54,4 +74,6 @@ require 'soundcloud/models/comment'
 require 'soundcloud/models/event'
 require 'soundcloud/models/playlist'
 require 'soundcloud/models/track'
+#require 'soundcloud/models/group'
+
 
