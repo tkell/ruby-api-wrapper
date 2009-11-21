@@ -101,6 +101,15 @@ module Soundcloud
         
     class Creator < User #:nodoc:
     end
+    
+    class Contributor < User
+    end
+    
+    class Member < User #:nodoc:
+    end
+    
+    class Moderator < User #:nodoc:
+    end
   end
 end
 

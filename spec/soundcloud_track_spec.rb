@@ -178,4 +178,7 @@ describe "Soundcloud::Models::Track" do
     @test_track_1.user.online.should_not be nil
   end
 
+  it 'should resolve a track' do
+    @sc.resolve(@test_track_1.permalink_url).should == @test_track_1
+  end
 end

@@ -38,6 +38,5 @@ describe "Soundcloud" do
     sc = Soundcloud.register({:access_token=> valid_oauth_access_token, :site => soundcloud_site})
     sc.to_s.should match(/Soundcloud::.+/)
     lambda{ sc.User.find(:one, :from => "/me")}.should_not raise_error ActiveResource::UnauthorizedAccess
-  end  
-  
+  end    
 end

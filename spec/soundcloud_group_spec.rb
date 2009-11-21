@@ -29,9 +29,22 @@ describe "Soundcloud::Models::Group" do
       @group = @sc.Group.find(2937)
     end
     
-    it 'should contain .. in ..' do
-      
+    it 'should have the right creatotr api_test_1' do
+      @group.creator.uri.should == @api_test_1.uri
     end
+    
+    it 'should have api_test_3 has a member' do
+      @group.members.should include(@api_test_3)
+    end
+    
+    it 'should have api_test_2 as a contributor' do
+      @group.contributors.should include(@api_test_2)
+    end
+    
+    it 'should have a contributed track' do
+      @group.tracks.map(&:uri).should include('http://api.sandbox-soundcloud.com/tracks/875948')
+    end
+    
   end
   
 end

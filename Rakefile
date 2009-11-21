@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "soundcloud-ruby-api-wrapper"
-    gem.summary = %Q{A ruby wrapper for the SoundCloud API}
+    gem.summary = "A ruby wrapper for the SoundCloud API"
     gem.email = "johannes@wagener.cc"
     gem.homepage = "http://github.com/soundcloud/ruby-api-wrapper"
     gem.authors = ["Johannes Wagener"]

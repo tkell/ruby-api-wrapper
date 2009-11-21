@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{soundcloud-ruby-api-wrapper}
-  s.version = "0.4.4"
+  s.version = "0.4.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johannes Wagener"]
-  s.date = %q{2009-11-19}
+  s.date = %q{2009-11-21}
   s.email = %q{johannes@wagener.cc}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/soundcloud/models/base.rb",
      "lib/soundcloud/models/comment.rb",
      "lib/soundcloud/models/event.rb",
+     "lib/soundcloud/models/group.rb",
      "lib/soundcloud/models/playlist.rb",
      "lib/soundcloud/models/track.rb",
      "lib/soundcloud/models/user.rb",
@@ -34,6 +35,7 @@ Gem::Specification.new do |s|
      "spec/fixtures/test_track.mp3",
      "spec/soundcloud_comment_spec.rb",
      "spec/soundcloud_event_spec.rb",
+     "spec/soundcloud_group_spec.rb",
      "spec/soundcloud_playlist_spec.rb",
      "spec/soundcloud_spec.rb",
      "spec/soundcloud_track_spec.rb",
@@ -48,6 +50,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/soundcloud_comment_spec.rb",
      "spec/soundcloud_event_spec.rb",
+     "spec/soundcloud_group_spec.rb",
      "spec/soundcloud_playlist_spec.rb",
      "spec/soundcloud_spec.rb",
      "spec/soundcloud_track_spec.rb",
