@@ -74,6 +74,6 @@ require 'soundcloud/models/comment'
 require 'soundcloud/models/event'
 require 'soundcloud/models/playlist'
 require 'soundcloud/models/track'
-#require 'soundcloud/models/group'
+require 'soundcloud/models/group'
 
 
