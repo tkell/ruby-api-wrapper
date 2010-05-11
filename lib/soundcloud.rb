@@ -7,8 +7,10 @@ require 'rubygems'
 gem 'oauth', '>= 0.3.6'
 require 'oauth'
 
-gem 'oauth-active-resource'
-require 'oauth_active_resource'
+#gem 'oauth-active-resource'
+#require 'oauth_active_resource'
+require '/Users/thor/Code/current/oauth-active-resource/lib/oauth_active_resource.rb' # ugly local fix.  Must be switched out before committing.
+
 
 module Soundcloud  
    # Will create an OAuth Consumer for you.
@@ -44,7 +46,10 @@ module Soundcloud
   #
   def self.register(options = {})
     options[:site] = options[:site] || 'http://api.soundcloud.com'
-    mod = OAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'), options)
+    if options[:consumer_key].nil?
+      raise "Error:  No consumer key supplied."
+    end
+    mod = SCOAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'), options[:consumer_key], options)
     add_resolver_to_mod(mod)
   end
   
@@ -75,5 +80,4 @@ require 'soundcloud/models/event'
 require 'soundcloud/models/playlist'
 require 'soundcloud/models/track'
 require 'soundcloud/models/group'
-
-
+require File.expand_path('../soundcloud/sc_oauth_active_resource', __FILE__)

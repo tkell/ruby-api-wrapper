@@ -18,8 +18,6 @@ require File.dirname(__FILE__) + '/spec_helper'
 # api-test-1 has Track "static-test-track" and user api-test-3 has not permissions for it
 # api-test-1 has a playlist "my-static-playlist" with at least 2 tracks
 
-
-
 describe "Soundcloud" do  
   before(:all) do
   end
@@ -28,13 +26,33 @@ describe "Soundcloud" do
     Soundcloud.consumer('consumer_token','consumer_secret').should be_an_instance_of OAuth::Consumer
   end
   
-  it 'should register a client without an oauth token' do
-    sc = Soundcloud.register({:site => soundcloud_site})
+  it 'should fail to create an oauth consumer' do # !! Fail to create an OAuth consumer - we'll pass a bad secret
+    Soundcloud.consumer('consumer_token','bad_consumer_secret').should_not be_an_instance_of OAuth::Consumer
+  end
+  
+  it 'should register a client with no API key, and no OAuth' do # !! Fail to log in with no key and no oauth
+    lambda { sc = Soundcloud.register({site => soundcloud_site})}.should raise_error # What kind of error do we want to raise here, in our final version?
+  end
+  
+  it 'should register a client with a bad API key, and no OAuth' do # !! Fail to access public resources with a bad key and no OAuth
+    sc = Soundcloud.register({:consumer_key=> invalid_consumer_key, :site => soundcloud_site})
+    sc.to_s.should match(/Soundcloud::.+/)
+    lambda{ sc.Track.find(:all,:params => {:order => 'hotness', :limit => 1})}.should raise_error ActiveResource::UnauthorizedAccess
+  end
+  
+  it 'should register a client with a good API key and no OAuth, and be able to access public resources' do # !! Access public resources with an API key, but no OAuth
+    sc = Soundcloud.register({:consumer_key=> valid_consumer_key, :site => soundcloud_site})
+    sc.to_s.should match(/Soundcloud::.+/)
+    lambda{ sc.Track.find(:all,:params => {:order => 'hotness', :limit => 1})}.should_not raise_error ActiveResource::UnauthorizedAccess
+  end
+  
+  it 'should register a client with a good API key and no OAuth, and fail to access private resources' do # !! Fail to access private resources with an API key, but no OAuth.
+    sc = Soundcloud.register({:consumer_key=> valid_consumer_key, :site => soundcloud_site})
     sc.to_s.should match(/Soundcloud::.+/)
     lambda{ sc.User.find(:one, :from => "/me")}.should raise_error ActiveResource::UnauthorizedAccess
   end
   
-  it 'should register a client with an oauth token' do
+  it 'should register a client with a valid oauth token, and be able to access private resources' do
     sc = Soundcloud.register({:access_token=> valid_oauth_access_token, :site => soundcloud_site})
     sc.to_s.should match(/Soundcloud::.+/)
     lambda{ sc.User.find(:one, :from => "/me")}.should_not raise_error ActiveResource::UnauthorizedAccess
