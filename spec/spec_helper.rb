@@ -16,10 +16,10 @@ end
 
 def soundcloud_settings
   return  {
-          :access_token => 'AsgdxDulQmk45AawcPI3g', 
-          :access_secret => 'NXfAc1nheU8ufUDojrcmPHb1Pf1N6ZlHu9xYogAvAY',
-          :consumer_token => '74CAKi2MhN6FIIUgR5YnA',
-          :consumer_secret => 'sM2XjxpwyIaZRuiCHjSp9p1FfLZQvyqLbTU0hhLBNXY', 
+          :access_token => 'your_access_token_here', 
+          :access_secret => 'your_access_secret_here',
+          :consumer_token => 'your_consumer_token_here',
+          :consumer_secret => 'your_consumer_secret_here', 
           :bad_consumer_token => '98ydfg',
           :bad_consumer_secret => 'Sp9p1FTU0hhLBNXY'
           }
