@@ -9,7 +9,7 @@ describe "Soundcloud::Models::Group" do
     @api_test_3 = @sc.User.find('api-test-3')
   end
   
-  # static-test-group id = 2937
+  # static-test-group id = 6635
   # api_test_1 - creator
   # api_test_3 - member
   # api_test_2 track1 should be contributied
@@ -19,14 +19,14 @@ describe "Soundcloud::Models::Group" do
   end
   
   it 'should get the fixture group' do
-    group = @sc.Group.find(2937)
+    group = @sc.Group.find(6635)
     group.name.should == "static-test-group"
   end
   
   
   describe 'users' do
     before do
-      @group = @sc.Group.find(2937)
+      @group = @sc.Group.find(6635)
     end
     
     it 'should have the right creatotr api_test_1' do
@@ -42,7 +42,7 @@ describe "Soundcloud::Models::Group" do
     end
     
     it 'should have a contributed track' do
-      @group.tracks.map(&:uri).should include('http://api.sandbox-soundcloud.com/tracks/875948')
+      @group.tracks.map(&:uri).should include('http://api.sandbox-soundcloud.com/tracks/2096547')
     end
     
   end

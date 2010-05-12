@@ -16,7 +16,10 @@ require File.dirname(__FILE__) + '/spec_helper'
 # api-test-2 has 'static-test-playlist' with Track1, 2 and 3
 #
 # api-test-1 has Track "static-test-track" and user api-test-3 has not permissions for it
+# "static-test-track" has a comment on it.
 # api-test-1 has a playlist "my-static-playlist" with at least 2 tracks
+
+# 
 
 
 
