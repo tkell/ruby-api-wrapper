@@ -46,10 +46,10 @@ module Soundcloud
   #
   def self.register(options = {})
     options[:site] = options[:site] || 'http://api.soundcloud.com'
-    if options[:consumer_key].nil?
-      raise "Error:  No consumer key supplied."
+    if options[:consumer_key].nil? && options[:access_token].nil? # Are we OK with having no key if there's an access token?  We must be.
+      raise "Error:  No consumer key or OAuth access token supplied."
     end
-    mod = SCOAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'), options[:consumer_key], options)
+    mod = SCOAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'),options)
     add_resolver_to_mod(mod)
   end
   

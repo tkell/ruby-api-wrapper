@@ -169,7 +169,7 @@ describe "Soundcloud::Models::Track" do
 =end
   
   it 'should be able to download a public track (unauthenticated)' do 
-    usc = Soundcloud.register({:site => soundcloud_site})
+    usc = Soundcloud.register({:consumer_key=> valid_consumer_key, :site => soundcloud_site})
     track = usc.Track.find(:one, :from => '/users/api-test-2/tracks/test-track')
     track.download_url
   end

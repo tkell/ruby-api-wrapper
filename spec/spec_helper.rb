@@ -14,6 +14,10 @@ def soundcloud_site
   'http://api.sandbox-soundcloud.com'
 end
 
+def valid_consumer_key
+  '74CAKi2MhN6FIIUgR5YnA'
+end
+
 def valid_oauth_access_token
   access_token = 'AsgdxDulQmk45AawcPI3g'
   access_secret = 'NXfAc1nheU8ufUDojrcmPHb1Pf1N6ZlHu9xYogAvAY'
