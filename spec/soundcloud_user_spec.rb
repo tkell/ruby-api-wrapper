@@ -22,7 +22,7 @@ describe "Soundcloud::Models::User" do
     user.username.should == test_for
   end
   
-# Search index not updated?
+# Search index not updated? a SOLR issue;  
 =begin
   it 'should find all api-test users' do
     test_for = 'api-test'
@@ -44,16 +44,16 @@ describe "Soundcloud::Models::User" do
     @api_test_3.remove_contact!    
   end
 
-# Favoriting not coming through?
-=begin
+# Favoriting not coming through - 
+
   it 'should check if a user has a favorite' do
-    track1 = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/yet-another-test-track')
+    track1 = @sc.Track.find(:one, :from => '/tracks/2096549')
     track2 = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/test-track')
     @api_test_2.has_favorite?(track1).should be true
     @api_test_2.has_favorite?(track1.id).should be true    
     @api_test_2.has_favorite?(track2).should be false
   end
-=end
+
   
   it 'should find the logged in user' do 
     my_user = @sc.User.find_me
