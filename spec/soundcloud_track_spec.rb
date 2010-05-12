@@ -133,24 +133,23 @@ describe "Soundcloud::Models::Track" do
   #  #tags.include? 'bla
   #end
   
-  # How is this implemented?
-=begin
-  it 'should be able to add a user to permissions of a track and delete it again' do
-    track = @sc.Track.find(:one, :from => '/users/api-test-1/tracks/static-test-track')   
-    
-    old_count = track.permissions.length
+  # How is this implemented? -- examine with WireShark
+  # it 'should be able to add a user to permissions of a track and delete it again' do
+  #   track = @sc.Track.find(:one, :from => '/users/api-test-1/tracks/static-test-track')   
+  #   
+  #   old_count = track.permissions.length
+  # 
+  #   track.permissions << @api_test_3    
+  #   track.permissions.save
+  #   
+  #   track.permissions.length.should be(old_count+1)    
+  #   
+  #   track.permissions.delete( @api_test_3 )
+  #   track.permissions.save
+  #   
+  #   track.permissions.length.should be(old_count)  
+  # end
 
-    track.permissions << @api_test_3    
-    track.permissions.save
-    
-    track.permissions.length.should be(old_count+1)    
-    
-    track.permissions.delete( @api_test_3 )
-    track.permissions.save
-    
-    track.permissions.length.should be(old_count)  
-  end
-=end
   
   it 'should add, check and remove a favorite to "me"' do
     @test_track_1.is_favorite?.should be false
@@ -161,12 +160,12 @@ describe "Soundcloud::Models::Track" do
   end  
   
 # Track is set to downloadable and shared to api-test-1, but spec returns "Track is not downloadable  "
-=begin
-  it 'should be able to download a private track' do
-    track = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/yet-another-test-track')
-    track.download_url
-  end
-=end
+# WireShark again, or look at the database  / quota
+  # it 'should be able to download a private track' do
+  #   track = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/yet-another-test-track')
+  #   puts track.inspect
+  #   track.download_url
+  # end
   
   it 'should be able to download a public track (unauthenticated)' do 
     usc = Soundcloud.register({:consumer_key=> valid_consumer_key, :site => soundcloud_site})
