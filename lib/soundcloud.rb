@@ -7,9 +7,8 @@ require 'rubygems'
 gem 'oauth', '>= 0.3.6'
 require 'oauth'
 
-#gem 'oauth-active-resource'
-#require 'oauth_active_resource'
-require '/Users/thor/Code/current/oauth-active-resource/lib/oauth_active_resource.rb' # ugly local fix.  Must be switched out before committing.
+gem 'oauth-active-resource'
+require 'oauth_active_resource'
 
 
 module Soundcloud  
@@ -46,7 +45,7 @@ module Soundcloud
   #
   def self.register(options = {})
     options[:site] = options[:site] || 'http://api.soundcloud.com'
-    if options[:consumer_key].nil? && options[:access_token].nil? # Are we OK with having no key if there's an access token?  We must be.
+    if options[:consumer_key].nil? && options[:access_token].nil?
       raise "Error:  No consumer key or OAuth access token supplied."
     end
     mod = SCOAuthActiveResource.register(self.ancestors.first, self.ancestors.first.const_get('Models'),options)

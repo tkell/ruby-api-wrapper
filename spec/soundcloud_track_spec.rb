@@ -133,7 +133,8 @@ describe "Soundcloud::Models::Track" do
   #  #tags.include? 'bla
   #end
   
-  # How is this implemented? -- examine with WireShark
+ 
+  # App was changed, which causes this implementation to
   # it 'should be able to add a user to permissions of a track and delete it again' do
   #   track = @sc.Track.find(:one, :from => '/users/api-test-1/tracks/static-test-track')   
   #   
@@ -159,16 +160,13 @@ describe "Soundcloud::Models::Track" do
     @test_track_1.is_favorite?.should be false
   end  
   
-# Track is set to downloadable and shared to api-test-1, but spec returns "Track is not downloadable  "
-# WireShark again, or look at the database  / quota
-  # it 'should be able to download a private track' do
-  #   track = @sc.Track.find(:one, :from => '/users/api-test-2/tracks/yet-another-test-track')
-  #   puts track.inspect
-  #   track.download_url
-  # end
+  it 'should be able to download a private track' do
+    track = @sc.Track.find(2096549)
+    track.download_url
+  end
   
   it 'should be able to download a public track (unauthenticated)' do 
-    usc = Soundcloud.register({:consumer_key=> valid_consumer_key, :site => soundcloud_site})
+    usc = Soundcloud.register({:consumer_key => soundcloud_settings[:consumer_token], :site => soundcloud_site})
     track = usc.Track.find(:one, :from => '/users/api-test-2/tracks/test-track')
     track.download_url
   end

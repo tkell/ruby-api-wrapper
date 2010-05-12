@@ -6,8 +6,8 @@ module Soundcloud
     attr_accessor :token, :secret
     def initialize(key)
       @key    = key
-      token = 'Anonymous'
-      secret = 'Anonymous'
+      @token = "public #{key}"
+      @secret = 'Anonymous'
       
       # ensure that keys are symbols
       @options = @@default_options    
@@ -21,9 +21,9 @@ module Soundcloud
       
       # Append the consumer key to the request
       if _uri.query.nil?
-        _uri.query = "key=#{@key}"
+        _uri.query = "consumer_key=#{@key}"
       else
-        _uri.query += "&key=#{@key}"
+        _uri.query += "&consumer_key=#{@key}"
       end
       
       path = "#{_uri.path}#{_uri.query ? "?#{_uri.query}" : ""}"
